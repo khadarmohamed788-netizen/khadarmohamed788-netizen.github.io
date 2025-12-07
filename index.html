@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Exam Generator — Q&A Parser</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Arial;max-width:980px;margin:24px auto;padding:16px}
+    textarea{width:100%;height:280px;padding:10px;font-family:monospace}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+    button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#f6f6f6;cursor:pointer}
+    .qa{margin:12px 0;padding:10px;border:1px solid #eee;border-radius:6px}
+    .question{font-weight:600}
+    .answer{margin-top:6px;color:#0b79a7;display:none}
+    .meta{font-size:13px;color:#666;margin-top:6px}
+    .small{font-size:13px;color:#444}
+  </style>
+</head>
+<body>
+  <h1>Exam Generator — Q&A Parser</h1>
+  <p class="small">Paste your full Q&A text (the big text you gave). Then click <strong>Parse & Generate 30</strong>. Each time you click it generates a random 30-question exam.</p>
+
+  <label><strong>Paste Q&A text here:</strong></label>
+  <textarea id="rawInput" placeholder="Paste all questions & answers here..."></textarea>
+
+  <div class="controls">
+    <button id="parseBtn">Parse & Generate 30</button>
+    <button id="new30">Generate new 30 (from parsed pool)</button>
+    <button id="toggleAnswers">Show / Hide Answers</button>
+    <button id="downloadJSON">Download exam (.json)</button>
+    <label style="align-self:center"><input type="checkbox" id="showSomali"> Show Somali labels</label>
+  </div>
+
+  <div id="status" class="small"></div>
+  <div id="exam"></div>
+
+<script>
+(function(){
+  const raw = document.getElementById('rawInput');
+  const parseBtn = document.getElementById('parseBtn');
+  const new30 = document.getElementById('new30');
+  const exam = document.getElementById('exam');
+  const status = document.getElementById('status');
+  const toggleAnswers = document.getElementById('toggleAnswers');
+  const downloadJSON = document.getElementById('downloadJSON');
+  const showSomali = document.getElementById('showSomali');
+
+  let pool = [];
+
+  function parseText(text){
+    // Normalize newlines
+    const lines = text.replace(/\r/g,'').split('\n');
+    const items = [];
+    let q = null, a = null;
+    for(let line of lines){
+      const L = line.trim();
+      if(!L) continue;
+      // try to detect "Question" or "Q" at line start (case-insensitive)
+      if(/^Question\s*\d*[\.\:\)]?/i.test(L) || /^Q\s*\d*[\.\:\)]?/i.test(L)){
+        // start new question
+        if(q || a){ // push previous if exists
+          if(q && a) items.push({question:q,answer:a});
+          q = null; a = null;
+        }
+        // remove leading "Question X" token
+        q = L.replace(/^Question\s*\d*[\.\:\)]?\s*/i,'').replace(/^Q\s*\d*[\.\:\)]?\s*/i,'').trim();
+      } else if(/^Answer\s*[\.\:\)]?/i.test(L) || /^A\s*[\.\:\)]?/i.test(L)){
+        a = L.replace(/^Answer\s*[\.\:\)]?\s*/i,'').replace(/^A\s*[\.\:\)]?\s*/i,'').trim();
+      } else {
+        // if line doesn't start with Q/A, append to last Q or A as continuation
+        if(a && !q){ /* nothing */ }
+        if(q && !a){
+          // probably continuation of question
+          q += ' ' + L;
+        } else if(a){
+          a += ' ' + L;
+        } else {
+          // If nothing yet, try to guess: maybe it's "Question line without prefix"
+          if(!q) q = L;
+          else if(!a) a = L;
+        }
+      }
+    }
+    if(q && a) items.push({question:q,answer:a});
+    return items;
+  }
+
+  function renderExam(list){
+    exam.innerHTML = '';
+    if(list.length === 0){
+      exam.innerHTML = '<p class="small">No questions to show. Parse first.</p>';
+      return;
+    }
+    list.forEach((it, idx) => {
+      const div = document.createElement('div');
+      div.className = 'qa';
+      div.innerHTML = '<div class="question">'+(idx+1)+'. '+escapeHtml(it.question)+'</div>'
+                    +'<div class="answer" data-index="'+idx+'">'+escapeHtml(it.answer)+'</div>'
+                    +'<div class="meta small">Source: parsed</div>';
+      exam.appendChild(div);
+    });
+  }
+
+  function escapeHtml(s){ return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+  function randomSample(arr, n){
+    const copy = arr.slice();
+    for(let i = copy.length -1; i>0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy.slice(0, Math.min(n, copy.length));
+  }
+
+  parseBtn.addEventListener('click', ()=>{
+    const text = raw.value.trim();
+    if(!text){
+      status.textContent = 'Please paste your Q&A text first.';
+      return;
+    }
+    pool = parseText(text);
+    status.textContent = 'Parsed ' + pool.length + ' Q&A pairs.';
+    const sample = randomSample(pool, 30);
+    renderExam(sample);
+  });
+
+  new30.addEventListener('click', ()=>{
+    if(pool.length === 0){ status.textContent='No parsed pool yet.'; return; }
+    const sample = randomSample(pool, 30);
+    status.textContent = 'New random 30 generated.';
+    renderExam(sample);
+  });
+
+  toggleAnswers.addEventListener('click', ()=>{
+    const answers = document.querySelectorAll('.answer');
+    if(!answers.length) return;
+    const anyHidden = Array.from(answers).some(d => d.style.display === '' || d.style.display === 'none');
+    answers.forEach(d => d.style.display = anyHidden ? 'block' : 'none');
+  });
+
+  downloadJSON.addEventListener('click', ()=>{
+    const qas = Array.from(document.querySelectorAll('.qa')).map(div=>{
+      return {
+        question: div.querySelector('.question')?.textContent?.replace(/^\d+\.\s*/,'') || '',
+        answer: div.querySelector('.answer')?.textContent || ''
+      };
+    });
+    const blob = new Blob([JSON.stringify(qas, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'exam_30.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // helper: show/hide Somali label (simple)
+  showSomali.addEventListener('change', ()=>{
+    document.querySelectorAll('.meta').forEach(m => {
+      if(showSomali.checked) m.textContent = 'Isha: la falanqeeyey';
+      else m.textContent = 'Source: parsed';
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

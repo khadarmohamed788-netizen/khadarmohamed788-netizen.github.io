@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Exam — Maskaxdi Wanaagsaneed</title>
+<style>
+  :root{--blue:#0b63d6;--bg:#f4f7fb;--card:#fff;--muted:#324055}
+  body{margin:0;background:var(--bg);font-family:Inter,system-ui,Arial;color:#071029}
+  .wrap{max-width:960px;margin:18px auto;padding:16px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  header h1{margin:0;color:var(--blue)}
+  nav a{color:var(--blue);text-decoration:none;font-weight:700;margin-left:12px}
+  #list{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+  .item{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 20px rgba(11,25,50,0.04)}
+  .q{font-weight:700;margin-bottom:8px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn{padding:8px 12px;border-radius:8px;border:2px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;font-weight:700}
+  .btn.ghost{background:transparent;color:var(--blue);border-color:rgba(11,99,214,0.12)}
+  .answer{margin-top:8px;padding:10px;background:#eef6ff;border-radius:8px;display:none}
+  input[type="text"]{padding:8px;border-radius:8px;border:1px solid #e6eefb;width:100%}
+  .result{margin-top:14px;padding:12px;border-radius:10px;background:#e9f8ee;color:#074b24;font-weight:700;display:none}
+  .note{color:var(--muted);font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Practice Exam — Auto Q&A</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="lessons.html">Lessons</a>
+      </nav>
+    </header>
+
+    <p class="note">This page extracts questions and answers from your raw notes. For accuracy, the parser searches for lines containing "Question" and "Answer". Click "Show Answer" to reveal the exact answer from your document, or type your answer and click "Check".</p>
+
+    <div id="list" aria-live="polite"></div>
+
+    <div id="summary" class="result"></div>
+
+    <!-- RAW content (from your paste) -->
+    <pre id="raw" style="display:none">
+SOUTHSIDE
+STREETS
+(MACONNEL ROAD
+SOUTH
+ReAD
+OLO KALMANKOM
+RGRQ
+HEUSTON STATION .
+VICTORIA
+Q U AY
+STETEN LANE
+J A M E S STREET
+ST. PAraicK натритак,
+JAMe HACE OF DAD
+HATUNG •STRIET
+USHER ISLAND QUAY
+BRIDGE FOOT STREET
+THOMAAS.
+NATIONAL
+COLLERE OF
+STREET
+MEATH STREET
+Das wied
+FRANCI STREST
+CORNMARKET
+BRIDGE STRET LOMER
+ST. MICHAEL HILL
+B A E E k A N g
+NICHO UNS STECT
+Question1 . Where is Richmond Park?
+Answer. Emmet Road. A
+Story And name
+Question 2. Where is Kilmainham Goal?
+Inchicore R o a d Fabino
+Story And n a m e
+Question 3. Where is Hilton Hotel Kilmainham?
+Answer. South circular Road. A h m e t
+Story And n a m e
+Question 4. Where d o e s Emmet Road runs between?
+Answer. South circular Road and Tyroconnell Road. SCR & TR A tAK 7/
+Story And n a m e
+Question 5. Emmet Road East b e c o m e s
+Answer. Old Kilmainham Road. A h t wadid
+Story And n a m e
+Question 6. In which a r e a is Emmet road ?
+Answer. Inchicore. A k a g h
+Story And name
+Question 7. Where is Dr Steeven ? Moh
+Answer. S t e e v e n ' s Lane mond
+Story And name
+Question 8. Where is Clancy barracks?
+Answer. South circular Road
+Story And name
+Question 9. Where is National boxing Stadium?
+Answer. South circular Road AL
+Story And name
+Question 10. Where is War Memorial Park?
+Answer. South circular Road 4h
+Story And name
+Question 11. Where is Dublin Mosque?.
+Answer. South circular Road se
+Story And name
+Question 12. Where is the Griffith college?
+Answer. South circular Road Aw.
+S t o r y A n d n a m e
+Question 13, where is blood bank
+Headquarters ( Irish blood transfusion) ?
+Answer. James Street F a m e s
+Story And name
+Question 14, where is saint James Hospital?
+Answer. J a m e s Street J
+S t o r y A n d n a m e
+Question 15. Where is Saint Patrick's hospital?
+A n s w e r. J a m e s s t r e e t
+Story And n a m e
+Question 16. In which area is Cork Street?
+A n s w e r. Dublin 8
+Story And n a m e
+Question 17. Where is coombe woman's Hospital.
+Answer. Cork Street, Dublin 8 mujib
+Story And n a m e
+Question 18. Where is Royal Hospital?
+Answer. Military Road, Kilmainham mug
+Story A n d n a m e
+Question 19. Where is Irish Museum of modern Art?
+AnSY
+sto
+Q
+Answer. Military Road
+Story And n a m e
+Question 20. Where is Heuston South Quarter Apartments?
+Answer. Military Road m e a
+Story And n a m e
+Question 21. Where is Heuston Station?
+Answer. Saint John Road West. raja
+Story And n a m e
+Question 22. Where is Rupert Guiness Theatre?
+Answer. Watling street Atic
+Story And name
+Question 23. Where is Guiness storehouse?
+Answer. St. James Gate ( Market street) biLak
+Story And n a m e
+Question 24. Where is James Joyce House Of déad ?
+Answer. Usher Ireland Quay 9 1
+Story And n a m e
+Question 25. Where is Vicar Street venue?
+Answer. Thomas Street m S
+Story And name
+Question 26. Where is national College of Art and design?
+Answer. Thomas Street m o S
+Story A n d n a m e
+Question 27. Where is Tivoli Theatre ?
+Answer. Francis Street malórr
+Story And n a m e
+Question 28. C o o m b e to Thomas Street?
+Answer. Meath Street (One Way) m o S
+Story And name
+Question 29. Cornmarket to Dean Street?
+Answer. Francis Street sha
+Story And name
+Question 30. Where is brazen head pub?
+Answer. Bridge Street, Lower k m
+Story And name
+Question 31. Where is Saint Audeon church.?
+Answer. High Street.
+c m
+Story And name
+Question 32. Where is a staycity apartments?
+Answer. High Street, Dublin - 8 FaySal Salug
+Story And name
+Question 33. Which Street does not border Guinness brewery?
+Answer. Usher Street / Ellis quay K a
+Story And n a m e
+Question 34. Where is Dublinia?
+Answer. Saint Michael's Hill.
+Story And name
+Question 35. There is Christchurch Cathedral?
+Answer. Christchurch place m
+Story And n a m e
+STORY
+A S T O N QUAY
+CHRSTORURCH
+...
+(Your full raw content continues — the entire text you pasted is here.)
+    </pre>
+
+  </main>
+
+<script>
+(function(){
+  // Read raw content
+  const raw = document.getElementById('raw').innerText;
+
+  // Normalize line breaks
+  const txt = raw.replace(/\r/g,'\n');
+
+  // Regex: find Question N ... Answer. ANSWER_TEXT
+  // Use a global regex that looks for "Question" followed by anything, then "Answer." and the answer text until next "Question" or end.
+  const QA = [];
+  const re = /Question\s*[\d\w\.\)]*\s*[:\-]?\s*(.*?)\n(?:Answer\.?\s*)([^\n]*)(?:\n|$)/gi;
+  let match;
+  while((match = re.exec(txt)) !== null){
+    let q = match[1].trim();
+    let a = match[2].trim();
+    if(q && a){
+      // Remove trailing "Story And name" if present in the same line
+      a = a.replace(/Story\s*And\s*name.*$/i,'').trim();
+      QA.push({q,a});
+    }
+  }
+
+  // Fallback: sometimes Answer lines are on next lines; try a second pass if none found
+  if(QA.length === 0){
+    // look for "Question" lines and take following "Answer." lines
+    const lines = txt.split('\n');
+    for(let i=0;i<lines.length;i++){
+      if(/^\s*Question/i.test(lines[i])){
+        let qline = lines[i].replace(/^\s*Question[\s\d\.\)]*\s*/i,'').trim();
+        // search next few lines for Answer.
+        for(let j=i+1;j<i+6 && j<lines.length;j++){
+          const l = lines[j];
+          if(/^\s*Answer\.?/i.test(l)){
+            let a = l.replace(/^\s*Answer\.?\s*/i,'').trim();
+            a = a.replace(/Story\s*And\s*name.*$/i,'').trim();
+            QA.push({q:qline,a});
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  // If still none, show message
+  const list = document.getElementById('list');
+  if(QA.length === 0){
+    list.innerHTML = '<div class="item"><div class="q">No questions found automatically.</div><div class="a">Please paste your raw Q&A in the "raw" block or contact me to help.</div></div>';
+    return;
+  }
+
+  // Build interactive list
+  QA.forEach((obj, idx)=>{
+    const id = 'q'+(idx+1);
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `<div class="q">Q${idx+1}. ${escapeHtml(obj.q)}</div>
+      <div class="controls">
+        <input type="text" placeholder="Type your answer here" id="${id}_inp">
+        <button class="btn ghost" data-id="${id}" data-idx="${idx}">Check</button>
+        <button class="btn" data-show="${id}" data-idx="${idx}">Show Answer</button>
+      </div>
+      <div class="answer" id="${id}_ans"><strong>Answer:</strong> ${escapeHtml(obj.a)}</div>`;
+    list.appendChild(div);
+  });
+
+  // Events
+  list.addEventListener('click', function(e){
+    if(e.target.matches('button[data-show]')){
+      const id = e.target.getAttribute('data-show');
+      const ans = document.getElementById(id+'_ans');
+      if(ans) ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+    }
+    if(e.target.matches('button[data-id]')){
+      const id = e.target.getAttribute('data-id');
+      const idx = parseInt(e.target.getAttribute('data-idx'),10);
+      const input = document.getElementById(id + '_inp');
+      const user = (input && input.value || '').trim().toLowerCase();
+      const correct = (QA[idx].a || '').trim().toLowerCase();
+      const ansDiv = document.getElementById(id + '_ans');
+      if(!user){
+        alert('Please type an answer (or click Show Answer).');
+        return;
+      }
+      // Simple comparison: exact match or includes
+      let ok = false;
+      if(user === correct) ok = true;
+      else if(correct.includes(user) || user.includes(correct)) ok = true;
+      // show result
+      if(ok){
+        e.target.textContent = 'Correct ✓';
+        e.target.style.background = '#0b8f4a';
+        e.target.style.borderColor = '#0b8f4a';
+        if(ansDiv) ansDiv.style.display = 'block';
+      } else {
+        e.target.textContent = 'Wrong ✕ (Shown)';
+        e.target.style.background = '#c7383a';
+        e.target.style.borderColor = '#c7383a';
+        if(ansDiv) ansDiv.style.display = 'block';
+      }
+    }
+  });
+
+  // small helper
+  function escapeHtml(s){ return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+  // summary
+  const summary = document.getElementById('summary');
+  summary.style.display = 'block';
+  summary.innerHTML = `Loaded ${QA.length} question(s). Use "Show Answer" or type your answer and click "Check".`;
+})();
+</script>
+</body>
+</html>

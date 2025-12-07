@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imtixaan | Maskaxdi Wanagsaneyd</title>
+
+    <style>
+        body {
+            background: #f4f4f4;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        header {
+            background: #1a73e8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #eef5ff;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+
+</head>
+<body>
+
+<header>
+    <h1>Imtixaanka Darawalnimada</h1>
+    <p>Ka jawaab su'aalaha hoose</p>
+</header>
+
+<div class="container">
+
+    <!-- Question 1 -->
+    <div class="question">
+        <p><strong>1. Calaamada Triangle cas waa maxay?</strong></p>
+        <label><input type="radio" name="q1" value="wrong"> Mamnuuc</label><br>
+        <label><input type="radio" name="q1" value="correct"> Digniin</label><br>
+        <label><input type="radio" name="q1" value="wrong"> Waddo la xiray</label>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question">
+        <p><strong>2. Marka aad joojinayso, maxaad ku eegtaa?</strong></p>
+        <label><input type="radio" name="q2" value="wrong"> Kaliya hore</label><br>
+        <label><input type="radio" name="q2" value="correct"> Dhammaan mirrors</label><br>
+        <label><input type="radio" name="q2" value="wrong"> Midig oo kaliya</label>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question">
+        <p><strong>3. Roundabout-ga yaa mudnaanta leh?</strong></p>
+        <label><input type="radio" name="q3" value="correct"> Ku jira roundabout-ka</label><br>
+        <label><input type="radio" name="q3" value="wrong"> Ku soo galaya</label><br>
+        <label><input type="radio" name="q3" value="wrong"> Midigtaada</label>
+    </div>
+
+    <!-- Add more questions here later -->
+
+    <button onclick="checkExam()">Gudbi Imtixaanka</button>
+
+    <p id="result"></p>
+
+</div>
+
+<script>
+function checkExam() {
+    let score = 0;
+    let total = 3;
+
+    if (document.querySelector('input[name="q1"]:checked')?.value === "correct") score++;
+    if (document.querySelector('input[name="q2"]:checked')?.value === "correct") score++;
+    if (document.querySelector('input[name="q3"]:checked')?.value === "correct") score++;
+
+    let result = document.getElementById("result");
+    result.innerHTML = "Waxaad ka heshay: " + score + " / " + total;
+
+    if(score === total){
+        result.style.color = "green";
+    } else if(score >= total/2){
+        result.style.color = "orange";
+    } else {
+        result.style.color = "red";
+    }
+}
+</script>
+
+</body>
+</html>
